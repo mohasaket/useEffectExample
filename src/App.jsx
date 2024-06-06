@@ -2,43 +2,49 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  // State to store the fetched data
+  //خوب این هوک مشخصه که برای ذخیره دیتا
   const [data, setData] = useState([]);
-  // State to manage the loading state
+  //این یکی هم برای اینکه بخواد مدیریت لود دیتا کنه
   const [loading, setLoading] = useState(true);
 
-  // useEffect hook to perform side effects
+  // برای انجام effect جانبی
   useEffect(() => {
-    // Function to fetch data from the API
+    //  فانکشن" برای گرفتن داده‌ها از API"
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Fetch data from the API
+        // گرفتن داده‌ها از API
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/posts"
         );
         const result = await response.json();
-        // Update the data state with the fetched data
+        // به‌روزرسانی حالت داده‌ها با داده‌های گرفته شده
         setData(result);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error(" نمایش خطا:", error);
       }
-      // Set loading to false after data is fetched
+      //بعد از گرفتن داده‌ها،
+      //setLoading(false) برای به‌روزرسانی حالت بارگذاری فراخوانی می‌شود.
       setLoading(false);
     };
+    //تابع fetchData از fetch برای گرفتن داده‌ها از https://jsonplaceholder.typicode.com/posts استفاده می‌کند.
+    //سپس پاسخ را به JSON تبدیل کرده و حالت data را به‌روز می‌کند.
 
-    // Call the fetchData function
     fetchData();
-  }, []); // Empty dependency array means this effect runs once after the initial render
+  }, []); // "آرایه dependency" خالی به این معناست که
+  //effect
+  // فقط یک بار بعد از رندر اولیه اجرا می‌شود
 
-  // Display loading message while data is being fetched
+  // اگر loading درست باشد،
+  //کامپوننت یک پیام "Loading..." را برمی‌گرداند.
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>منتظر بمانید...</div>;
   }
-  // Render the fetched data
+  //  رندر داده‌های گرفته شده
   return (
     <div>
-      <h1>Fetched Data</h1>
+      <h1>اطلاعات گرفته شده</h1>
       <ul>
         {data.map((item) => (
           <li key={item.id}>{item.title}</li>
